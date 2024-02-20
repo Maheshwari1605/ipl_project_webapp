@@ -9,7 +9,7 @@ fetch('http://localhost:3000/matches-per-year')
 
   const chart = new Highcharts.Chart({
     chart: {
-      renderTo: "container1",
+      renderTo: "container",
       type: "column",
       options3d: {
         enabled: true,
