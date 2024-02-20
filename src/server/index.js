@@ -39,7 +39,7 @@ function isEmpty(data) {
     })
   }
   
-  app.use (cors())
+app.use (cors())
 
 
 app.get('/matches-per-year', (req, res) => {
