@@ -32,9 +32,9 @@ function isEmpty(data) {
 
 
 app.use (cors())
-app.use(express.static(path.join(__dirname, '..', 'public')))
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
-let html_file_path = path.join(__dirname ,'..', 'public', 'html_files' )
+let html_file_path = path.join(__dirname ,'..', 'public', 'html_files' );
 
 app.get('/', (req, res) => {
     // console.log(`${html_file_path}/main.html`)
