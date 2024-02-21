@@ -1,4 +1,4 @@
-fetch('http://localhost:3000/extra_run_conceeded')
+fetch('https://iplprojectmb.netlify.app/output/3-extra-runs-conceded-per-team-2016.json')
 .then((data)=>{
   return data.json();
 })

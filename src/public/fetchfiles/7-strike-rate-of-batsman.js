@@ -1,4 +1,4 @@
-fetch('http://localhost:3000/strike_rate_of_the_batsman')
+fetch('https://iplprojectmb.netlify.app/output/7-strike-rate-of-batsman-each-season.json')
 .then((data)=>{
   return data.json();
 })

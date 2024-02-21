@@ -29,17 +29,17 @@ function isEmpty(data) {
       }
     }
   }
-  
-  let getApi = (err, data) => {
-    return tryCatch((req, res) => {
-      if (isEmpty(data)) {
-        throw new Error(err);
-      }
-      res.status(200).json(data);
-    })
-  }
-  
+
+
 app.use (cors())
+app.use(express.static(path.join(__dirname, '..', 'public')))
+
+let html_file_path = path.join(__dirname ,'..', 'public', 'html_files' )
+
+app.get('/', (req, res) => {
+    // console.log(`${html_file_path}/main.html`)
+    res.sendFile(`${html_file_path}/main.html`)
+})
 
 
 app.get('/matches-per-year', (req, res) => {

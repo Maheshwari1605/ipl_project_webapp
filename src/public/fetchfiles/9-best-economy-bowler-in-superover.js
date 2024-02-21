@@ -1,4 +1,4 @@
-fetch('http://localhost:3000/best_economy_in_superover')
+fetch('https://iplprojectmb.netlify.app/output/9-best-economy-bowler-in-super-overs.json')
 .then((data)=>{
   return data.json();
 })

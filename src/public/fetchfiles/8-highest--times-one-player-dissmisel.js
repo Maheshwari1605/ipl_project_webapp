@@ -1,4 +1,4 @@
-fetch('http://localhost:3000/one_player_dismiss_by_another')
+fetch('https://iplprojectmb.netlify.app/output/8-highest-times-one-player-dismmised-by-another-player.json')
 .then((data)=>{
   return data.json();
 })

@@ -1,4 +1,4 @@
-fetch('http://localhost:3000/highest_player_of_the_match')
+fetch('https://iplprojectmb.netlify.app/output/6-highest-player-of-match-each-season.json')
 .then((data)=>{
   return data.json();
 })

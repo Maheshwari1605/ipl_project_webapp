@@ -1,5 +1,5 @@
 //Matches per year
-fetch('http://localhost:3000/matches-per-year')
+fetch('https://iplprojectmb.netlify.app/output/1-matches-per-year.json')
 .then((data) => {
   return data.json();
 })

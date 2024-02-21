@@ -1,88 +1,126 @@
-
-fetch('http://localhost:3000/matches_won_per_team_per_year')
-.then((data)=>{
-  return data.json();
-})
-.then((data)=>{
-
-  let seasonList = [];
-  Object.values(data).map((currentData)=>{
-    Object.keys(currentData).map((season)=>{
-      if(seasonList.indexOf(season) === -1){
-        seasonList.push(season);
-      }
-    });
-  });
-  seasonList.sort((firstSeason,secondSeason)=>{
-    return firstSeason-secondSeason;
+fetch("https://iplprojectmb.netlify.app/output/2-matches-won-per-team-per-year.json")
+  .then((data) => {
+    return data.json();
   })
-
-  let allTeamWithWinRecord = [];
-  let teamData = {};
-  Object.entries(data).map((currentData)=>{
-    teamData['name'] = currentData[0];
-    let highestAwardSeasonWise = [];
-    seasonList.map((season)=>{
-      if(currentData[1][season] === undefined){
-        highestAwardSeasonWise.push("not played");
-      }else{
-        highestAwardSeasonWise.push(currentData[1][season]);
-      }
-    });
-    teamData['data'] = highestAwardSeasonWise;
-    allTeamWithWinRecord.push(teamData);
-    teamData =  {};
-  });
-  Highcharts.chart('container', {
-    chart: {
-      type: 'bar'
-    },
-    title: {
-      text: '2. MATCHES WON PER TEAM PER YEAR',
-      align: 'left'
-    },
-    xAxis: {
-      categories: seasonList,
-      title: {
-        text: 'IPL SEASONS'
-      }
-    },
-    yAxis: {
-      min: 0,
-      title: {
-        text: 'NUMBER OF MATCHES WON',
-        align: 'high'
-      },
-      labels: {
-        overflow: 'justify'
-      }
-    },
-    tooltip: {
-      valueSuffix: ''
-    },
-    plotOptions: {
-      bar: {
-        dataLabels: {
-          enabled: true
+  .then((data) => {
+    let seasonList = [];
+    Object.values(data).map((currentData) => {
+      Object.keys(currentData).map((season) => {
+        if (seasonList.indexOf(season) === -1) {
+          seasonList.push(season);
         }
-      }
-    },
-    legend: {
-      layout: 'vertical',
-      align: 'right',
-      verticalAlign: 'top',
-      x: -40,
-      y: 80,
-      floating: true,
-      borderWidth: 1,
-      backgroundColor:
-        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-      shadow: true
-    },
-    credits: {
-      enabled: false
-    },
-    series: allTeamWithWinRecord
-  });
-})
+      });
+    });
+    seasonList.sort((firstSeason, secondSeason) => {
+      return firstSeason - secondSeason;
+    });
+    
+    let yearwisearray = [];
+    let teamname = Object.keys (data);
+    Object.values (data).forEach (each => {
+      let arr = []
+      seasonList.forEach (season => {
+        if (each[season] === undefined) {
+          arr.push(0)
+        }else {
+          arr.push(each[season])
+        }
+      })
+      yearwisearray.push(arr)
+    })
+    console.log(yearwisearray);
+    console.log(seasonList);
+    console.log(teamname);
+
+    // Substring template helper for the responsive labels
+    Highcharts.Templating.helpers.substr = (s, from, length) =>
+      s.substr(from, length);
+
+    // Create the chart
+    Highcharts.chart("container", {
+      chart: {
+        type: "heatmap",
+        marginTop: 40,
+        marginBottom: 80,
+        plotBorderWidth: 1,
+      },
+
+      title: {
+        text: "Matches won per team per year",
+        style: {
+          fontSize: "1em",
+        },
+      },
+
+      xAxis: {
+        categories: seasonList
+      },
+
+      yAxis: {
+        categories: teamname,
+        title: null,
+        reversed: true,
+      },
+
+      accessibility: {
+        point: {
+          descriptionFormat:
+            "{(add index 1)}. " +
+            "{series.xAxis.categories.(x)} won " +
+            "{series.yAxis.categories.(y)}, {value}.",
+        },
+      },
+
+      colorAxis: {
+        min: 0,
+        minColor: "#FFFFFF",
+        maxColor: Highcharts.getOptions().colors[0],
+      },
+
+      legend: {
+        align: "right",
+        layout: "vertical",
+        margin: 0,
+        verticalAlign: "top",
+        y: 25,
+        symbolHeight: 280,
+      },
+
+      tooltip: {
+        format:
+          "<b>{series.xAxis.categories.(point.x)}</b> matches in <br>" +
+          "<b>{point.value}</b> won <br>" +
+          "<b>{series.yAxis.categories.(point.y)}</b>",
+      },
+
+      series: [
+        {
+          name: "Matches won",
+          borderWidth: 1,
+          data: yearwisearray,
+          dataLabels: {
+            enabled: true,
+            color: "#000000",
+          },
+        },
+      ],
+
+      responsive: {
+        rules: [
+          {
+            condition: {
+              maxWidth: 500,
+            },
+            chartOptions: {
+              yAxis: {
+                labels: {
+                  format: "{substr value 0 1}",
+                },
+              },
+            },
+          },
+        ],
+      },
+    });
+  })
   .catch((error) => console.error("Error fetching data:", error));

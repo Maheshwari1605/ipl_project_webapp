@@ -1,4 +1,4 @@
-fetch('http://localhost:3000/team_won_toss_match')
+fetch('https://iplprojectmb.netlify.app/output/5-team-won-toss-won-match.json')
 .then((data)=>{
   return data.json();
 })

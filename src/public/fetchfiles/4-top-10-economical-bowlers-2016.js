@@ -1,4 +1,4 @@
-fetch('http://localhost:3000/top_10_economical_bowler')
+fetch('https://iplprojectmb.netlify.app/output/4-top-10-economical-bowlers-2015.json')
 .then((data)=>{
   return data.json();
 })
